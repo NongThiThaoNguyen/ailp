@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
     const cat = s.get('category'), lvl = s.get('level'), search = s.get('q'), page = Number(s.get('page')||1), limit = 12
     const offset = (page-1)*limit
     let where = `WHERE c.status='published'`
-    const params: Record<string,unknown> = {uid:user.id, limit, offset}
+    const params: Record<string, any> = {uid:user.id, limit, offset}
     if (cat)    { where += ` AND cc.name=@cat`;    params.cat=cat }
     if (lvl)    { where += ` AND cl.name=@lvl`;    params.lvl=lvl }
     if (search) { where += ` AND c.title LIKE @q`; params.q=`%${search}%` }

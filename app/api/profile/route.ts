@@ -23,7 +23,7 @@ export async function PUT(req: NextRequest) {
     if (!p.success) return NextResponse.json({error:'Dữ liệu không hợp lệ'},{status:400})
     const d = p.data
     const profileFields:string[] = []
-    const profileParams:Record<string,unknown> = {uid}
+    const profileParams:Record<string,any> = {uid}
     if (d.full_name!==undefined){profileFields.push('full_name=@fn');profileParams.fn=d.full_name}
     if (d.bio!==undefined){profileFields.push('bio=@bio');profileParams.bio=d.bio}
     if (d.date_of_birth!==undefined){profileFields.push('date_of_birth=@dob');profileParams.dob=d.date_of_birth}
@@ -31,7 +31,7 @@ export async function PUT(req: NextRequest) {
     if (d.country!==undefined){profileFields.push('country=@country');profileParams.country=d.country}
     if (profileFields.length) await exec(`UPDATE user_profiles SET ${profileFields.join(',')},updated_at=GETDATE() WHERE user_id=@uid`,profileParams)
     const settingFields:string[] = []
-    const settingParams:Record<string,unknown> = {uid}
+    const settingParams:Record<string,any> = {uid}
     if (d.language!==undefined){settingFields.push('language=@lang');settingParams.lang=d.language}
     if (d.timezone!==undefined){settingFields.push('timezone=@tz');settingParams.tz=d.timezone}
     if (d.email_notifications!==undefined){settingFields.push('email_notifications=@en');settingParams.en=d.email_notifications}
